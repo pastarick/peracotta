@@ -40,7 +40,10 @@ def upload_to_tarallo(data):
         exit(-1)
 
     for k, v in d.items():
-        case.add_content(v)
+        i = Item(v)
+        if i.features['type'] == 'hdd':
+            i.add_feature('sata-ports-n', 1)
+        case.add_content(i)
 
     case.set_location('ciao')
 
