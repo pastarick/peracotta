@@ -13,7 +13,6 @@ from parsers.read_lspci_and_glxinfo import read_lspci_and_glxinfo
 from parsers.read_smartctl import read_smartctl
 from tarallo_token import TARALLO_TOKEN
 
-
 def extract_and_collect_data_from_generated_files(directory: str, has_dedicated_gpu: bool, gpu_in_cpu: bool,
                                                   verbose: bool = False):
     directory = directory.rstrip('/')
@@ -272,6 +271,10 @@ if __name__ == '__main__':
                                 cleanup=True,
                                 verbose=args.verbose)
             print(json.dumps(data, indent=2))
+
+            """NEW PART"""
+            from upload import upload_to_tarallo
+            upload_to_tarallo(data)
 
     except InputFileNotFoundError as e:
         print(str(e))
