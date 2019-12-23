@@ -36,6 +36,43 @@ function run_extract_data {
   ./extract_data.py -$gpu_location "$OUTPUT_PATH"
 }
 
+# ask the user if he wants to upload existing data from some folder
+function upload_existing_data {
+  if [[ $# == 0 ]]; then
+    echo ""
+    echo "Missing path argument: looking for data in 'tmp'..."
+    echo ""
+    source_path='tmp'
+  else
+    source_path=$1
+  fi
+
+  #does the path exist?
+  if [[ ! -d source_path ]]; then
+    echo ""
+    echo "Error: given directory doesn't exist."
+    echo "Try using absolute path..."
+    echo ""
+    exit -1
+  fi
+
+  #is the path non-empty?
+  if [[ $(ls source_path | wc -l) == 0 ]]; then
+    echo "Error: no data found in given path $source_path"
+    exit -1
+  fi
+
+  echo "Printing the content of $source_path:"
+  echo ""
+
+  ls source_path
+  echo "Do you really want to update these files? y/N"
+  read ans1
+  if [[ ans1 == 'y' -o ans1 == 'Y' ]]; then
+
+
+}
+
 
 # parse arguments
 # unknown_args=()
